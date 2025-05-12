@@ -1,10 +1,12 @@
 const express = require('express')
 const app = express()
 
-app.use("/ds", (req, res) => {
-    res.send("heldfsdlo")
+app.get("/user", (req, res) => {
+    res.send({"firstName":"djc"})
 })
-app.use("/", (req, res) => {
-    res.send("hello")
+
+app.post("/user", (req, res) => {
+    res.send("added to db")
 })
+
 app.listen(3000)
