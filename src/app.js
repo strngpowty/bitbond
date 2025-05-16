@@ -15,7 +15,7 @@ app.post("/signup", async (req,res) => {
         await userObj.save();
         res.send("User Added Successfully")
     } catch(err) {
-        res.status(400).send("Adding User Failed")
+        res.status(400).send("Adding User Failed"+err)
     }
 })
 
@@ -24,6 +24,19 @@ app.get("/user", async (req, res) => {
     const userEmail =  req.body.emailId
     try{
         const user = await User.find({emailId : userEmail})
+        if(user.length === 0) {
+            res.status(400).send("User not found")
+        }
+        res.send(user)
+    } catch(err) {
+        res.status(400).send("Something went wrong")
+    }
+})
+
+// get all users from db
+app.get("/feed", async (req, res) => {
+    try{
+        const user = await User.find()
         res.send(user)
     } catch(err) {
         res.status(400).send("Something went wrong")
