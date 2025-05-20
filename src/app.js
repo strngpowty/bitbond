@@ -7,6 +7,7 @@ const {validateSignUpData} = require("./utils/validation");
 const bcrypt = require("bcrypt")
 const cookieParser = require("cookie-parser")
 const jwt = require("jsonwebtoken")
+const {userAuth} = require("./middlewares/auth")
 
 app.use(express.json());
 app.use(cors());
@@ -47,7 +48,6 @@ app.post("/login", async(req, res) => {
         if(isPasswordValid) {
           // create a jwt token
           const token = await jwt.sign({_id : user._id}, "Admin12!@")
-          console.log(token)
           // add the token to the cookie and send the response 
           res.cookie("token", token)
 
@@ -62,13 +62,18 @@ app.post("/login", async(req, res) => {
 })
 
 // profile api
-app.get("/profile", async(req, res) => {
-  const cookies = req.cookies
-  const { token } = cookies;
-  // validate my token
-  const decodedMsg = await jwt.verify(token, "Admin12!@")
-  console.log(decodedMsg)
+app.get("/profile", userAuth, async(req, res) => {
+  console.log(req.user)
   res.send("reading cookie")
+})
+
+// send connection request
+app.post("/sendConnectionRequest",userAuth, async ( req, res) => {
+  try{
+    res.send(req.user.firstName + " sent the connection request")
+  } catch (err) {
+
+  }
 })
 
 // get single user -> by email
