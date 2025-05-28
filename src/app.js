@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/database");
-const User = require("./models/user");
 const app = express();
 const cookieParser = require("cookie-parser")
 
@@ -16,16 +15,6 @@ const requestRouter = require("./routes/request")
 app.use("/", authRouter)
 app.use("/", profileRouter)
 app.use("/", requestRouter)
-
-// get all users from db
-app.get("/feed", async (req, res) => {
-  try {
-    const user = await User.find();
-    res.send(user);
-  } catch (err) {
-    res.status(400).send("Something went wrong");
-  }
-});
 
 connectDB()
   .then(() => {

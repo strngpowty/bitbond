@@ -8,7 +8,8 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         minLength: 3,
-        maxLength: 50
+        maxLength: 50,
+        // index : true ///  or create index like this 
     },
     lastName: {
         type: String
@@ -16,7 +17,7 @@ const UserSchema = new mongoose.Schema({
     emailId: {
         type: String,
         required: true,
-        unique: true,
+        unique: true,  // automatically creates index when field set to unique : true
         lowercase:true,
         trim: true,
         validate(value){
@@ -70,6 +71,7 @@ const UserSchema = new mongoose.Schema({
 {
     timestamps: true
 })
+
 
 /// jwt token created here - attached to user schema
 UserSchema.methods.getJWT = async function() {
