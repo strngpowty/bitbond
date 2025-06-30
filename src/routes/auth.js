@@ -55,4 +55,8 @@ authRouter.post("/logout", async(req, res) => {
   res.send("Logged Out Successfully")
 })
 
+authRouter.get("/version", async(req, res) => {
+  res.send("BitBond Backend Version 1.0.1 30-June-2025")
+})
+
 module.exports = authRouter
